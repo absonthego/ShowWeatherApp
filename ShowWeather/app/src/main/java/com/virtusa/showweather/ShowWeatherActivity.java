@@ -204,8 +204,8 @@ public class ShowWeatherActivity extends AppCompatActivity {
                 String weatherIconCode = finalObject1.getString(Constants.KEY_ICON);
                 String weatherDescription = finalObject1.getString(Constants.KEY_DESCRIPTION);
 
-                double weatherTempMin = finalObject2.getInt(Constants.KEY_TEMP_MIN);
-                double weatherTempMax = finalObject2.getInt(Constants.KEY_TEMP_MAX);
+                int weatherTempMin = finalObject2.getInt(Constants.KEY_TEMP_MIN);
+                int weatherTempMax = finalObject2.getInt(Constants.KEY_TEMP_MAX);
 
                 weatherTempMin = getTempInFarh(weatherTempMin); // K to F calculation
                 weatherTempMax = getTempInFarh(weatherTempMax);  // K to F calculation
@@ -275,8 +275,8 @@ public class ShowWeatherActivity extends AppCompatActivity {
                         alertNotFound();
                     } else {
                         textViewWeatherDetails.setText(weatherDescription);
-                        textViewWeatherTempMin.setText("min " + weatherTempMin);
-                        textViewWeatherTempMax.setText("max " + weatherTempMax);
+                        textViewWeatherTempMin.setText("min " + weatherTempMin + " F");
+                        textViewWeatherTempMax.setText("max " + weatherTempMax + " F");
                         textViewWeatherLocalName.setText(/*"Location: " +*/ weatherLocalName);
                         String url = Constants.URL_GETICON_PART_1 + weatherIconCode + Constants.URL_GETICON_PART_2;
                         Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT).show();
@@ -297,9 +297,11 @@ public class ShowWeatherActivity extends AppCompatActivity {
      * @param weatherTempInKelvin
      * @return
      */
-    private double getTempInFarh(double weatherTempInKelvin) {
-        return 1.8 * (weatherTempInKelvin - 273) + 32;
+    private int getTempInFarh(int weatherTempInKelvin) {
+        double f = 1.8 * (weatherTempInKelvin - 273) + 32;
+        return (int)Math.ceil(f);
     }
+
 
 
     /**
